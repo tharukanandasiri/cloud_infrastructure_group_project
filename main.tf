@@ -139,9 +139,11 @@ resource "aws_launch_template" "web_launch_template" {
     yum install -y httpd
     systemctl enable httpd
     systemctl start httpd
-    echo "<h1>Hello World from Auto Scaling Group!</h1>" > /var/www/html/index.html
-EOF
-  )
+
+    aws s3 cp s3://ci-architects/index.html /var/www/html/index.html
+    aws s3 cp s3://ci-architects/style.css /var/www/html/style.css
+    EOF
+)
 
     tag_specifications {
       resource_type = "instance"
